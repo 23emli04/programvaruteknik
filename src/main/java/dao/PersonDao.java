@@ -21,7 +21,7 @@ import domain.Person;
  *
  * @author awi
  */
-public class PersonDao {
+public class PersonDao implements Dao<Person> {
 
     DbConnectionManager dbConManagerSingleton = null;
 
@@ -109,41 +109,45 @@ public class PersonDao {
      *          an 'id' identical to an existing student in the DB
      */
 
-    public boolean update(Person t) {
+    public Person update(Person t) {
         PreparedStatement preparedStatement = null;
-        boolean updateSuccess = false;
+
         try {
-            // Construct the SQL query for updating an existing record
             String updateSQL = "UPDATE lab_persons SET name = ?, birth_year = ? WHERE id = ?";
-
-            // Prepare the SQL statement
-            preparedStatement = dbConManagerSingleton.prepareStatement(updateSQL);
-            preparedStatement.setString(1, t.getName());       // Set the new name
-            preparedStatement.setInt(2, t.getBirthYear());    // Set the new birth year
-            preparedStatement.setInt(3, t.getId());           // Specify the ID of the record to update
-
-            // Execute the update operation
+            preparedStatement = dbConManagerSingleton.prepareStatement(updateSQL, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, t.getName());
+            preparedStatement.setInt(2, t.getBirthYear());
+            preparedStatement.setInt(3, t.getId());
             int affectedRows = preparedStatement.executeUpdate();
-
-            // If at least one row was updated, the operation was successful
-            updateSuccess = affectedRows > 0;
+            if(affectedRows > 0){
+                t = new Person(t.getId(), t.getName(), t.getBirthYear());
+            }
             System.out.println("Rows updated: " + affectedRows);
         } catch (SQLException e) {
             System.err.println("Error updating person: " + e.getMessage());
-        } finally {
-            if (preparedStatement != null) {
-                try {
-                    preparedStatement.close();
-                } catch (SQLException e) {
-                    System.err.println("Error closing PreparedStatement: " + e.getMessage());
-                }
-            }
         }
-        return updateSuccess;
+        return t;
     }
 
-    public void delete(Person t) {
-        // TODO Auto-generated method stub
+    public Person delete(Person t) {
+        PreparedStatement preparedStatement = null;
+        try {
+            String deleteSQL = "DELETE FROM lab_persons WHERE id = ?";
+            // Prepare the SQL DELETE statement
+            preparedStatement = dbConManagerSingleton.prepareStatement(deleteSQL, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, t.getId());
+
+            // Execute the DELETE statement
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Deleting person failed, no rows affected.");
+            }
+
+            // Return true if the deletion was successful
+            return new Person(t.getId(), t.getName(), t.getBirthYear());
+        } catch (SQLException e) {
+            e.printStackTrace();}
+        return null;
 
     }
 

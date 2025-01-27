@@ -17,9 +17,13 @@ public class Person {
     }
 
     public Person(int id, String name, int birthYear) {
-        this.id = id;
+        setId(id);
         setName(name);
         setBirthYear(birthYear);
+    }
+
+    private void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -30,8 +34,7 @@ public class Person {
         name.trim();
         if (checkName(name)) {
             this.name = name;
-        }
-        else throw new IllegalArgumentException("Incorrect name format");
+        } else throw new IllegalArgumentException("Incorrect name format");
     }
 
     private boolean checkName(String name) {
@@ -47,12 +50,16 @@ public class Person {
     public void setBirthYear(int birthYear) {
         if (birthYear >= 1900 && birthYear <= 2100) {
             this.birthYear = birthYear;
-        }
-        else throw new IllegalArgumentException("birthYear must be between 1900 and 2100");
+        } else throw new IllegalArgumentException("birthYear must be between 1900 and 2100");
     }
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Id: %d, Name: %s, Birth Year: %d", id, name, birthYear);
     }
 
 
