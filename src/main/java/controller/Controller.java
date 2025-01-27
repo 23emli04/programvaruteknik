@@ -1,10 +1,12 @@
 package controller;
 
-import dao.PersonDAO;
+import dao.PersonDao;
+import domain.Person;
 
 public class Controller {
+    PersonDao personDao = new PersonDao();
 
-    public void addUser(int age,String student){
-        PersonDAO.getInstance().addPerson(age, student);
+    public Person addUser(Person person) {
+        return personDao.save(person);
     }
 }
