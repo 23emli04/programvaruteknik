@@ -4,7 +4,7 @@ package domainHelper;
  * Har valt att skapa en klass med statiska metoder för att kontrollera och formatera en sträng enligt formatet
  * Aaaaa Bbbbb, inte jättebra implementation men mer ett exempel på single responsibility principle.
  * @author Emil Lindström Moffatt
- * @Version 2025-01-27
+ * @version 2025-01-27
  */
 
 public class NameFormatter {
@@ -18,7 +18,7 @@ public class NameFormatter {
      * @throws IllegalArgumentException om namnet är fel
      */
     public static String formatName(String name) {
-        if (!checkName(name)) {
+        if (!checkCharacterName(name)) {
             throw new IllegalArgumentException("Illegal name format");
         }
 
@@ -40,11 +40,11 @@ public class NameFormatter {
 
     /**
      * Kollar att namnet är någolunda korrekt
-     *
+     * Använder Regex för att säkerställa att namnet innehåller endast bokstäver
      * @param name namn att kontrollera
-     * @return sant om namnet är korrekt, annars falskt.
+     * @return sant om namnet är korrekt, annars falskt
      */
-    private static boolean checkName(String name) {
+    private static boolean checkCharacterName(String name) {
         if (name == null || name.isEmpty()) {
             return false;
         }
