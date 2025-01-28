@@ -8,25 +8,24 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import db.DbConnectionManager;
-import domain.Location;
-import domain.Person;
+import domain.Site;
 
-public class LocationDao implements Dao<Location> {
+public class SiteDao implements Dao<Site> {
     DbConnectionManager dbConManagerSingleton = null;
 
-    public LocationDao() {
+    public SiteDao() {
         dbConManagerSingleton = DbConnectionManager.getInstance();
     }
 
 
     @Override
-    public Location get(int id) {
-        Location location = null;
+    public Site get(int id) {
+        Site site = null;
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
 
         try {
-            String query = "SELECT street, city, state, zip, country, street_number, location_id FROM lab_locations WHERE id = ?";
+            String query = "SELECT street, city, state, zip, country, street_number, site_id FROM lab_sites WHERE id = ?";
             preparedStatement = dbConManagerSingleton.prepareStatement(query, id);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -39,8 +38,8 @@ public class LocationDao implements Dao<Location> {
                 int zip = resultSet.getInt("zip");
                 String country = resultSet.getString("country");
                 int streetNumber = resultSet.getInt("street_number");
-                int locationId = resultSet.getInt("location_id");
-                location = new Location(street, city, state, country, zip, streetNumber, locationId);
+                int siteId = resultSet.getInt("site_id");
+                site = new Site(street, city, state, country, zip, streetNumber, siteId);
             }
 
             dbConManagerSingleton.close();
@@ -48,15 +47,15 @@ public class LocationDao implements Dao<Location> {
             e.printStackTrace();
         }
 
-        return location;
+        return site;
     }
 
     @Override
-    public List<Location> getAll() {
-        List<Location> locations = new ArrayList<>();
+    public List<Site> getAll() {
+        List<Site> sites = new ArrayList<>();
         try {
             ResultSet resultSet = dbConManagerSingleton.excecuteQuery(
-                    "SELECT street, city, state, country, zip, street_number, location_id FROM lab_locations");
+                    "SELECT street, city, state, country, zip, street_number, site_id FROM lab_sites");
             while (resultSet.next()) {
                 String street = resultSet.getString("street");
                 String city = resultSet.getString("city");
@@ -64,25 +63,25 @@ public class LocationDao implements Dao<Location> {
                 int zip = resultSet.getInt("zip");
                 String country = resultSet.getString("country");
                 int streetNumber = resultSet.getInt("street_number");
-                int locationId = resultSet.getInt("location_id");
-                Location location = new Location(street, city, state, country, zip, streetNumber, locationId);
-                locations.add(location);
+                int locationId = resultSet.getInt("site_id");
+                Site site = new Site(street, city, state, country, zip, streetNumber, locationId);
+                sites.add(site);
             }
             dbConManagerSingleton.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return locations;
+        return sites;
     }
 
     @Override
-    public Location save(Location t) {
+    public Site save(Site t) {
         PreparedStatement preparedStatement = null;
         ResultSet generatedKeys = null;
 
         try {
             preparedStatement = dbConManagerSingleton.prepareStatement(
-                    "INSERT INTO lab_locations (street, city, state, zip, street_number, country) VALUES (?, ?, ?, ?, ?,?)",
+                    "INSERT INTO lab_sites (street, city, state, zip, street_number, country) VALUES (?, ?, ?, ?, ?,?)",
                     PreparedStatement.RETURN_GENERATED_KEYS
             );
             preparedStatement.setString(1, t.getStreet());
@@ -100,7 +99,7 @@ public class LocationDao implements Dao<Location> {
             generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int generatedId = generatedKeys.getInt(1);
-                t = new Location(t.getStreet(), t.getCity(), t.getState(), t.getCountry(), t.getZip(), t.getStreetNumber(), generatedId);
+                t = new Site(t.getStreet(), t.getCity(), t.getState(), t.getCountry(), t.getZip(), t.getStreetNumber(), generatedId);
             } else {
                 throw new SQLException("Saving person failed, no ID obtained.");
             }
@@ -112,12 +111,12 @@ public class LocationDao implements Dao<Location> {
     }
 
     @Override
-    public Location update(Location location) {
+    public Site update(Site location) {
         return null;
     }
 
     @Override
-    public Location delete(Location location) {
+    public Site delete(Site location) {
         return null;
     }
 }

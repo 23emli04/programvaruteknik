@@ -19,7 +19,10 @@ import java.util.List;
 public class Spike2 {
     public static void main(String[] args) {
         PersonDao personDao = new PersonDao();
-        List<Person> list = personDao.getAll();
+        List<Person> list;
+        Person persone = new Person(2000,"Nisse");
+        personDao.save(persone);
+        list = personDao.getAll();
         for (Person person : list) {
             System.out.println(person);
         }

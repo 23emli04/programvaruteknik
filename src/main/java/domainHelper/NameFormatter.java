@@ -10,7 +10,7 @@ package domainHelper;
 public class NameFormatter {
 
     /**
-     *Dålig metod som försöker formattera ett ord utan tillräckligt med felkontroller men men
+     *Dålig metod som försöker formatera ett ord utan tillräckligt med felkontroller men men
      * den får duga för nu xD
      *
      * @param name namn att formattera
