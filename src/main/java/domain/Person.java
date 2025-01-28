@@ -1,5 +1,7 @@
 package domain;
 
+import domainHelper.NameFormatter;
+
 /**
  * En klass som beskriver en person
  *
@@ -31,16 +33,7 @@ public class Person {
     }
 
     public void setName(String name) {
-        name.trim();
-        if (checkName(name)) {
-            this.name = name;
-        } else throw new IllegalArgumentException("Incorrect name format");
-    }
-
-    private boolean checkName(String name) {
-        if (name.matches("[a-zA-Z]+")) {
-            return true;
-        } else return false;
+        this.name = NameFormatter.formatName(name);
     }
 
     public int getBirthYear() {

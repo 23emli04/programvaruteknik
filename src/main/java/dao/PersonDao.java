@@ -48,7 +48,7 @@ public class PersonDao implements Dao<Person> {
 
     public List<Person> getAll() {
 
-        ArrayList<Person> list = new ArrayList<>();
+        List<Person> list = new ArrayList<>();
 
         try {
             ResultSet resultSet = dbConManagerSingleton.excecuteQuery("SELECT id, name, birth_year FROM lab_persons");
@@ -70,8 +70,7 @@ public class PersonDao implements Dao<Person> {
         PreparedStatement preparedStatement = null;
         ResultSet generatedKeys = null;
 
-        try {
-            // Prepare the SQL INSERT statement
+        try{
             preparedStatement = dbConManagerSingleton.prepareStatement(
                     "INSERT INTO lab_persons (name, birth_year) VALUES (?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS
@@ -79,13 +78,11 @@ public class PersonDao implements Dao<Person> {
             preparedStatement.setString(1, t.getName());
             preparedStatement.setInt(2, t.getBirthYear());
 
-            // Execute the statement and check if a row was inserted
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Saving person failed, no rows affected.");
             }
 
-            // Retrieve the generated key (auto-incremented ID)
             generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int generatedId = generatedKeys.getInt(1);
