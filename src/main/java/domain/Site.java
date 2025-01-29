@@ -6,6 +6,7 @@ import domainHelper.NameFormatter;
  * En klass för en "site" som fungerar som en stor adress, med diverse attribut.
  * Syftar till att vara en arbetsplats entitet.
  * //TODO skapa fler attribut som t.ex CiteManager, CiteOwner osv.
+ *
  * @Author Emil Lindström Moffatt
  * @Version 2025-01-28
  */
@@ -20,7 +21,7 @@ public class Site {
     private int siteId;
 
 
-    public Site(String street, String city, String state,  String country, int zip, int streetNumber) {
+    public Site(String street, String city, String state, String country, int zip, int streetNumber) {
         setStreet(street);
         setCity(city);
         setState(state);
@@ -29,7 +30,7 @@ public class Site {
         setStreetNumber(streetNumber);
     }
 
-    public Site(String street, String city, String state, String country,int zip, int streetNumber, int siteId) {
+    public Site(String street, String city, String state, String country, int zip, int streetNumber, int siteId) {
         this(street, city, state, country, zip, streetNumber);
         this.siteId = siteId;
     }
@@ -41,21 +42,24 @@ public class Site {
     /**
      * Metod som ändrar gatunamnet och använder NameFormatter för att se till att namnet blir
      * någolunda formatterat.
+     *
      * @param street ett korrekt gatunamn.
      * @see NameFormatter
      */
     public void setStreet(String street) {
         if (street != null && !street.isEmpty()) {
-           this.street = NameFormatter.formatName(street);
+            this.street = NameFormatter.formatName(street);
         } else throw new IllegalArgumentException("Street cannot be empty");
     }
 
     public String getCity() {
         return city;
     }
+
     /**
      * Metod som ändrar stadsnamnet och använder NameFormatter för att se till att namnet blir
      * någolunda formatterat.
+     *
      * @param city ett korrekt gatunamn.
      * @see NameFormatter
      */
@@ -68,9 +72,11 @@ public class Site {
     public String getState() {
         return state;
     }
+
     /**
      * Metod som ändrar kommunnamnet och använder NameFormatter för att se till att namnet blir
      * någolunda formatterat.
+     *
      * @param state ett korrekt kommunnamn.
      * @see NameFormatter
      */
@@ -94,9 +100,11 @@ public class Site {
     public String getCountry() {
         return country;
     }
+
     /**
      * Metod som ändrar landnamnet och använder NameFormatter för att se till att namnet blir
      * någolunda formatterat.
+     *
      * @param country ett korrekt land.
      * @see NameFormatter
      */
@@ -116,9 +124,10 @@ public class Site {
             this.streetNumber = streetNumber;
     }
 
-    public int getLocationId() {
+    public int getId() {
         return siteId;
     }
+
     @Override
     public String toString() {
         return String.format("Id: %d, Street: %s, Street Number: %d, City: %s, State: %s, Country: %s, Zip: %d",

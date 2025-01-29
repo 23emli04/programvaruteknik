@@ -6,7 +6,7 @@ import domain.Site;
 import java.util.List;
 
 /**
- * En klass som testar SiteDao.
+ * En klass som testar SiteDao.6
  * @Author Emil
  * @Version 2025-01-28
  */

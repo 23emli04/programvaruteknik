@@ -17,15 +17,13 @@ public class NameFormatter {
      * @return formatterat namn
      * @throws IllegalArgumentException om namnet är fel
      */
+    //TODO kolla ännu fler buggar, behövs massor här ngl. Lite osäker på hur det ska implementeras på ett bra sätt.
+
     public static String formatName(String name) {
         if (!checkCharacterName(name)) {
             throw new IllegalArgumentException("Illegal name format");
         }
-
-        //TODO kolla ännu fler buggar, behövs massor här ngl. Lite osäker på hur det ska implementeras på ett bra sätt.
-        //IDK if i can do this xDDDDD
-
-        String[] words = name.split(" ");
+        String[] words = name.split("\\s+");
 
         StringBuilder formattedName = new StringBuilder();
         for (String word : words) {
