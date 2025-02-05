@@ -113,38 +113,50 @@ public class SiteDao implements Dao<Site> {
     @Override
     public Site update(Site site) {
         PreparedStatement preparedStatement = null;
-        ResultSet generatedKeys = null;
-        String query = "UPDATE (street, city, state, country, zip, street_number) FROM lab_sites WHERE id = ?";
-        Site t = null;
+        String query = "UPDATE lab_sites SET street = ?, city = ?, state = ?, country = ?, zip = ?, street_number = ? " +
+                "WHERE site_id = ?";
 
         try {
-            preparedStatement = dbConManagerSingleton.prepareStatement(query, preparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement = dbConManagerSingleton.prepareStatement(query);
             preparedStatement.setString(1, site.getStreet());
             preparedStatement.setString(2, site.getCity());
             preparedStatement.setString(3, site.getState());
             preparedStatement.setString(4, site.getCountry());
             preparedStatement.setInt(5, site.getZip());
             preparedStatement.setInt(6, site.getStreetNumber());
+            preparedStatement.setInt(7, site.getId());
+
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Update person failed, no rows affected.");
+                throw new SQLException("Update failed, no rows affected.");
             }
-            if (generatedKeys.next()) {
-                int generatedId = generatedKeys.getInt(1);
-                t = new Site(site.getStreet(), site.getCity(), site.getState(), site.getCountry(), site.getZip(), site.getStreetNumber(), generatedId);
-            } else {
-                throw new SQLException("Updating site failed, no ID found");
-            }
+            return site;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return t;
+
+        return site;
     }
+
 
     @Override
     public Site delete(Site site) {
-        return null;
-        //TODO
+        PreparedStatement preparedStatement = null;
+        String query = "DELETE FROM lab_sites WHERE site_id = ?";
+
+        try {
+            preparedStatement = dbConManagerSingleton.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, site.getId());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Delete failed, no rows affected");
+            }
+
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return site;
     }
 }

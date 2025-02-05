@@ -126,4 +126,8 @@ public class DbConnectionManager {
             System.err.println(e.getMessage());
         }
     }
+
+    public PreparedStatement prepareStatement(String query) throws SQLException {
+        return this.getConnection().prepareStatement(query);
+    }
 }
