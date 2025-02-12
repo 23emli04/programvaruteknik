@@ -20,7 +20,7 @@ import java.util.List;
 public class Spike2 {
     public static void main(String[] args) {
         List<Person> list;
-        Person person = new Person("Nisse", 2020, 3);
+        Person person = new Person("Nisse", 2020, 6);
         PersonService personService = new PersonService();
         person = personService.save(person);
         //TODO
@@ -31,7 +31,9 @@ public class Spike2 {
         }
 
         System.out.println(personService.getSiteByPerson(person));
-        System.out.println(personService.getSiteByPersonId(2));
+
+
+        System.out.println(personService.getSiteByPersonId(4));
         //TODO
     }
 }

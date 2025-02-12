@@ -33,11 +33,11 @@ public class PersonDao implements Dao<Person> {
     public Person get(int id) throws NoSuchElementException {
         Person student = null;
         try {
-            ResultSet resultSet = dbConManagerSingleton.excecuteQuery("SELECT id, name, birth_year FROM lab_persons WHERE id=" + id);
+            ResultSet resultSet = dbConManagerSingleton.excecuteQuery("SELECT id, name, birth_year, site_id FROM lab_persons WHERE id=" + id);
             if (!resultSet.next())
                 throw new NoSuchElementException("The person with id " + id + " doesen't exist in database");
             else
-                student = new Person(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3));
+                student = new Person(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4));
             dbConManagerSingleton.close();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -28,6 +28,7 @@ public class PersonService {
     public Person update(Person person) {
         return new PersonDao().update(person);
     }
+
     public Site getSiteByPerson(Person person) {
           Site site = new SiteDao().get(person.getSiteId());
           return site;
@@ -35,9 +36,6 @@ public class PersonService {
     }
     public Site getSiteByPersonId(int id) {
         Person person = new PersonDao().get(id);
-        int personSiteId = person.getSiteId();
-        Site site = new SiteDao().get(personSiteId);
-        return site;
-        //TODO
+        return getSiteByPerson(person);
     }
 }
