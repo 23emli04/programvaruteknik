@@ -25,7 +25,7 @@ public class SiteDao implements Dao<Site> {
         PreparedStatement preparedStatement = null;
 
         try {
-            String query = "SELECT street, city, state, zip, country, street_number, site_id FROM lab_sites WHERE id = ?";
+            String query = "SELECT street, city, state, zip, country, street_number, site_id FROM lab_sites WHERE site_id = ?";
             preparedStatement = dbConManagerSingleton.prepareStatement(query, id);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();

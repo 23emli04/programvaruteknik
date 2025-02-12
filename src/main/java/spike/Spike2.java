@@ -1,5 +1,6 @@
 package spike;
 
+import Service.PersonService;
 import dao.PersonDao;
 import db.DbConnectionManager;
 import domain.Person;
@@ -18,13 +19,17 @@ import java.util.List;
 
 public class Spike2 {
     public static void main(String[] args) {
-        PersonDao personDao = new PersonDao();
         List<Person> list;
-        Person persone = new Person(2000,"Nisse");
-        personDao.save(persone);
-        list = personDao.getAll();
-        for (Person person : list) {
-            System.out.println(person);
+        Person person = new Person("Nisse", 2020, 3);
+        PersonService personService = new PersonService();
+        person = personService.save(person);
+        list = personService.getAll();
+        for (Person p : list) {
+            System.out.println(p);
         }
+
+        System.out.println(personService.getSiteByPerson(person));
+        System.out.println(personService.getSiteByPersonId(2));
+        //TODO
     }
 }

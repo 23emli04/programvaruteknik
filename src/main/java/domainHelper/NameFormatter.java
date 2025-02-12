@@ -8,7 +8,6 @@ package domainHelper;
  */
 
 public class NameFormatter {
-
     /**
      *Dålig metod som försöker formatera ett ord utan tillräckligt med felkontroller men men
      * den får duga för nu xD

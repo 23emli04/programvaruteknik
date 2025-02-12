@@ -51,12 +51,10 @@ public class PersonDao implements Dao<Person> {
         List<Person> list = new ArrayList<>();
 
         try {
-            ResultSet resultSet = dbConManagerSingleton.excecuteQuery("SELECT id, name, birth_year FROM lab_persons");
+            ResultSet resultSet = dbConManagerSingleton.excecuteQuery("SELECT id, name, birth_year, site_id FROM lab_persons");
             while (resultSet.next()) {
-                list.add(new Person(resultSet.getInt(1),
-                        resultSet.getString(2).trim(),
-                        resultSet.getInt(3))
-                );
+                list.add(new Person(resultSet.getInt(1), resultSet.getString(2), resultSet.getInt(3), resultSet.getInt(4)));
+
 
             }
             dbConManagerSingleton.close();
@@ -72,11 +70,12 @@ public class PersonDao implements Dao<Person> {
 
         try{
             preparedStatement = dbConManagerSingleton.prepareStatement(
-                    "INSERT INTO lab_persons (name, birth_year) VALUES (?, ?)",
+                    "INSERT INTO lab_persons (name, birth_year, site_id) VALUES (?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS
             );
             preparedStatement.setString(1, t.getName());
             preparedStatement.setInt(2, t.getBirthYear());
+            preparedStatement.setInt(3, t.getSiteId());
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
@@ -86,7 +85,10 @@ public class PersonDao implements Dao<Person> {
             generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 int generatedId = generatedKeys.getInt(1);
-                t = new Person(generatedId, t.getName(), t.getBirthYear());
+                t = new Person(generatedId,
+                        t.getName(),
+                        t.getBirthYear(),
+                        t.getSiteId());
             } else {
                 throw new SQLException("Saving person failed, no ID obtained.");
             }
@@ -110,11 +112,12 @@ public class PersonDao implements Dao<Person> {
         PreparedStatement preparedStatement = null;
 
         try {
-            String updateSQL = "UPDATE lab_persons SET name = ?, birth_year = ? WHERE id = ?";
+            String updateSQL = "UPDATE lab_persons SET name = ?, birth_year = ?, site_id = ? WHERE id = ?";
             preparedStatement = dbConManagerSingleton.prepareStatement(updateSQL, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, t.getName());
             preparedStatement.setInt(2, t.getBirthYear());
-            preparedStatement.setInt(3, t.getId());
+            preparedStatement.setInt(3, t.getSiteId());
+            preparedStatement.setInt(4, t.getId());
             int affectedRows = preparedStatement.executeUpdate();
             if(affectedRows > 0){
                 t = new Person(t.getId(), t.getName(), t.getBirthYear());
@@ -130,18 +133,14 @@ public class PersonDao implements Dao<Person> {
         PreparedStatement preparedStatement = null;
         try {
             String deleteSQL = "DELETE FROM lab_persons WHERE id = ?";
-            // Prepare the SQL DELETE statement
             preparedStatement = dbConManagerSingleton.prepareStatement(deleteSQL, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, t.getId());
-
-            // Execute the DELETE statement
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Deleting person failed, no rows affected.");
             }
 
-            // Return true if the deletion was successful
-            return new Person(t.getId(), t.getName(), t.getBirthYear());
+            return new Person(t.getId(), t.getName(), t.getBirthYear(), t.getSiteId());
         } catch (SQLException e) {
             e.printStackTrace();}
         return null;

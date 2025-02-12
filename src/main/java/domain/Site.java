@@ -94,7 +94,7 @@ public class Site {
     public void setZip(int zip) {
         if (zip > 0)
             this.zip = zip;
-        else throw new IllegalArgumentException("Zip cannot be empty");
+        else throw new IllegalArgumentException("Zip must be greater than 0");
     }
 
     public String getCountry() {
@@ -122,6 +122,7 @@ public class Site {
     public void setStreetNumber(int streetNumber) {
         if (streetNumber > 0)
             this.streetNumber = streetNumber;
+        else throw new IllegalArgumentException("StreetNumber must be greater than 0");
     }
 
     public int getId() {

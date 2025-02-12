@@ -12,6 +12,7 @@ public class Person {
     private int id;
     private String name;
     private int birthYear;
+    private int siteId;
 
     public Person(int birthYear, String name) {
         setName(name);
@@ -24,8 +25,28 @@ public class Person {
         setBirthYear(birthYear);
     }
 
+    public Person(String name, int birthYear, int siteId) {
+        setName(name);
+        setBirthYear(birthYear);
+        setSiteId(siteId);
+    }
+
+    public Person(int id, String name, int birthYear, int siteId) {
+        setId(id);
+        setName(name);
+        setBirthYear(birthYear);
+        setSiteId(siteId);
+    }
+
     private void setId(int id) {
         this.id = id;
+    }
+
+    public void setSiteId(int siteId) {
+        this.siteId = siteId;
+    }
+    public int getSiteId() {
+        return this.siteId;
     }
 
     public String getName() {
@@ -52,7 +73,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return String.format("Id: %d, Name: %s, Birth Year: %d", id, name, birthYear);
+        return String.format("Id: %d, Name: %s, Birth Year: %d, siteId: %d", id, name, birthYear, siteId);
     }
 
 
