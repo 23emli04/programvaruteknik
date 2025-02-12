@@ -29,13 +29,6 @@ public class PersonService {
         return new PersonDao().update(person);
     }
 
-    public Site getSiteByPerson(Person person) {
-          Site site = new SiteDao().get(person.getSiteId());
-          return site;
 
-    }
-    public Site getSiteByPersonId(int id) {
-        Person person = new PersonDao().get(id);
-        return getSiteByPerson(person);
-    }
+
 }
