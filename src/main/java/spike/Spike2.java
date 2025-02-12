@@ -23,6 +23,8 @@ public class Spike2 {
         Person person = new Person("Nisse", 2020, 3);
         PersonService personService = new PersonService();
         person = personService.save(person);
+        //TODO
+
         list = personService.getAll();
         for (Person p : list) {
             System.out.println(p);
