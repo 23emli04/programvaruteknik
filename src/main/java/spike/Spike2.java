@@ -30,10 +30,6 @@ public class Spike2 {
             System.out.println(p);
         }
 
-        System.out.println(personService.getSiteByPerson(person));
-
-
-        System.out.println(personService.getSiteByPersonId(4));
         //TODO
     }
 }

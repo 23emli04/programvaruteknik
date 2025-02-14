@@ -14,7 +14,7 @@ public class Person {
     private int birthYear;
     private int siteId;
 
-    public Person(int birthYear, String name) {
+    public Person(String name, int birthYear) {
         setName(name);
         setBirthYear(birthYear);
     }
