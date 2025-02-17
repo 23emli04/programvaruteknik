@@ -120,7 +120,7 @@ public class PersonDao implements Dao<Person> {
             preparedStatement.setInt(4, t.getId());
             int affectedRows = preparedStatement.executeUpdate();
             if(affectedRows > 0){
-                t = new Person(t.getId(), t.getName(), t.getBirthYear());
+                t = new Person(t.getId(), t.getName(), t.getBirthYear(), t.getSiteId());
             }
             System.out.println("Rows updated: " + affectedRows);
         } catch (SQLException e) {

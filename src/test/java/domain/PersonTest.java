@@ -11,7 +11,7 @@ class PersonTest {
 
     @BeforeEach
     void setUp() {
-        wPerson = new Person(2019, "Nisse");
+        wPerson = new Person("Nisse", 2019,1);
     }
     @AfterEach
     void tearDown() {
@@ -76,11 +76,11 @@ class PersonTest {
     }
     @Test
     void testToString() {
-        assertEquals("Id: 0, Name: Nisse, Birth Year: 2019, siteId: 0", wPerson.toString());
+        assertEquals("Id: 0, Name: Nisse, Birth Year: 2019, siteId: 1", wPerson.toString());
     }
     @Test
     void createPersonWithBadInputs(){
-        assertThrows(IllegalArgumentException.class, () -> wPerson = new Person(0, "123"));
+        assertThrows(IllegalArgumentException.class, () -> wPerson = new Person("134",2,1));
 
     }
 }

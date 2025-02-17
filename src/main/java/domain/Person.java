@@ -2,6 +2,10 @@ package domain;
 
 import domainHelper.NameFormatter;
 
+import java.time.LocalDate;
+
+import static com.sun.tools.javac.resources.CompilerProperties.Fragments.Local;
+
 /**
  * En klass som beskriver en person
  *
@@ -62,7 +66,9 @@ public class Person {
     }
 
     public void setBirthYear(int birthYear) {
-        if (birthYear >= 1900 && birthYear <= 2100) {
+        int maxBirthYear = LocalDate.now().getYear();
+        int minBirthYear = maxBirthYear - 130;
+        if (birthYear >= minBirthYear && birthYear <= maxBirthYear) {
             this.birthYear = birthYear;
         } else throw new IllegalArgumentException("birthYear must be between 1900 and 2100");
     }
