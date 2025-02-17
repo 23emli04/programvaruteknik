@@ -52,8 +52,13 @@ public class Spike4 {
         System.out.println("--------Get Site By ID Test--------------");
         for(int i = 1; i< 4; i++)
             System.out.println(new GetSiteByPersonIdService(i).execute());
+//        System.out.println("--------Delete site service--------------");
+//        System.out.println(new DeleteSiteService(sites.get(1)).execute());
+//        System.out.println("--------Get Site By ID Test--------------");
+//        System.out.println(new GetSiteBySiteIdService(2).execute());
 
-
+        System.out.println(personService.getPersonById(1));
+        //Funkar som förväntat
 
 
 
